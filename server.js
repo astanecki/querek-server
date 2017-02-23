@@ -219,7 +219,7 @@ app.get('/manifest/:type/:version/manifest.plist', function (req, res) {
 app.get('/fitatu.ipa', function (req, res) {
     var path = __dirname + '/apps/release/v2.0.14/Fitatu.ipa';
 
-    console.log('mime: ',     mime.lookup(path));
+    console.log('MMMime: ',     mime.lookup(path));
 
     res.setHeader("Content-Type", mime.lookup(path));
     res.sendFile(path);
@@ -229,28 +229,10 @@ app.get('/fitatu/:type/:version/fitatu.ipa', function (req, res) {
     // var platformExtension = getPlatformExtension(req.headers);
     var appDirPath = getFilePath(req.params.type, req.params.version);
 
-    console.log('mime: ',     mime.lookup(path));
+    console.log('IPA mime: ',     mime.lookup(appDirPath));
 
-    // -----
-
-    fs.readdir(appDirPath, function (err, list) {
-        list.forEach(function (file) {
-            // @example file = "Fitatu.ipa"
-            if ('ipa' > -1) {
-                console.log('file: ', file);
-
-                // browser downloads file named "app.ipa" or "app.apk" due to endpoint name
-                res.setHeader("Content-Type", mime.lookup(appDirPath + '/' + file));
-                res.sendFile(appDirPath + '/' + file);
-            }
-        });
-    });
-
-
-    // -----
-
-    // res.setHeader("Content-Type", mime.lookup(path));
-    // res.sendFile(path);
+    res.setHeader("Content-Type", mime.lookup(appDirPath + '/' + 'Fitatu.ipa'));
+    res.sendFile(appDirPath + '/' + 'Fitatu.ipa');
 });
 
 app.get('/app', function (req, res) {
@@ -335,36 +317,36 @@ function generatePlist(type, version) {
         '<?xml version="1.0" encoding="UTF-8"?>' +
         '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' +
         '<plist version="1.0">' +
-        '<dict>' +
-        '<key>items</key>' +
-        '<array>' +
-        '<dict>' +
-        '<key>assets</key>' +
-        '<array>' +
-        '<dict>' +
-        '<key>kind</key>' +
-        '<string>software-package</string>' +
-        '<key>url</key>' +
-        // here server crashes while connecting variables
-        // '<string>https://fdebd1a2.ngrok.io/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
-        // '<string>https://fdebd1a2.ngrok.io/fitatu/release/2.0.1/fitatu.ipa</string>' +
-        '<string>https://fdebd1a2.ngrok.io/fitatu.ipa</string>' +
-        '</dict>' +
-        '</array>' +
-        '<key>metadata</key>' +
-        '<dict>' +
-        '<key>bundle-identifier</key>' +
-        '<string>com.fitatu.tracker</string>' +
-        '<key>bundle-version</key>' +
-        '<string>2.0.3</string>' +
-        '<key>kind</key>' +
-        '<string>software</string>' +
-        '<key>title</key>' +
-        '<string>AppName</string>' +
-        '</dict>' +
-        '</dict>' +
-        '</array>' +
-        '</dict>' +
+            '<dict>' +
+                '<key>items</key>' +
+                '<array>' +
+                    '<dict>' +
+                        '<key>assets</key>' +
+                        '<array>' +
+                            '<dict>' +
+                            '<key>kind</key>' +
+                            '<string>software-package</string>' +
+                            '<key>url</key>' +
+                            // here server crashes while connecting variables
+                            '<string>https://551530d2.ngrok.io/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
+                            // '<string>https://551530d2.ngrok.io/fitatu/release/v2.0.14/fitatu.ipa</string>' +
+                            // '<string>https://551530d2.ngrok.io/fitatu.ipa</string>' +
+                            '</dict>' +
+                        '</array>' +
+                        '<key>metadata</key>' +
+                        '<dict>' +
+                            '<key>bundle-identifier</key>' +
+                            '<string>com.fitatu.tracker</string>' +
+                            '<key>bundle-version</key>' +
+                            '<string>2.0.3</string>' +
+                            '<key>kind</key>' +
+                            '<string>software</string>' +
+                            '<key>title</key>' +
+                            '<string>AppName</string>' +
+                        '</dict>' +
+                    '</dict>' +
+                '</array>' +
+            '</dict>' +
         '</plist>';
 
     return xml;
