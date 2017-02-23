@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{kus}</title>
+        <meta name="viewport" content="width=device-width">
+    <body>
+        <div>
+            Detect your device!
+        </div>
+        <script>
+
+            /**
+             * Stores details like version and type of requested application
+             *
+             * @type {Object}
+             */
+            var requestOptions;
+
+
+            /**
+             * @function
+             * @returns {Array.<String>}
+             */
+            function collectSearchArguments() {
+                return document.location.search
+                        //removes "?" sign
+                        .slice(1, document.location.search.length)
+                        .split('&');
+            }
+
+
+            /**
+             * @function
+             * @returns {Object}
+             */
+            function collectApplicationDetails() {
+                var queries = collectSearchArguments();
+                var options = {};
+
+                queries.forEach(function (query) {
+                    options[query.split('=')[0]] = query.split('=')[1];
+                });
+
+                return options;
+            }
+
+
+            /**
+             * @function
+             * @returns {Boolean}
+             */
+            function isAndroid() {
+                return /android/.test(window.navigator.userAgent.toLowerCase());
+            }
+
+
+            /**
+             * @function
+             */
+            function detect() {
+                requestOptions = collectApplicationDetails();
+
+                if (isAndroid()) {
+                    document.location = 'https://fdebd1a2.ngrok.io/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+                } else {
+                    document.location = 'itms-services://?action=download-manifest&amp;url=https://fdebd1a2.ngrok.io/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
+                }
+            }
+
+
+            // LETS START
+            detect();
+
+
+        </script>
+    </body>
+</html>
