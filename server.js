@@ -163,11 +163,7 @@ function prepareAppForSaving(app) {
 }
 
 function writeFile(version, name, base64, type) {
-    fs.writeFile(
-        'apps/' + type + '/' + version + '/' + name,
-        base64,
-        'base64'
-    );
+    fs.writeFile('apps/' + type + '/' + version + '/' + name, base64, 'base64');
 }
 
 function getFilePath(type, version) {
@@ -180,6 +176,8 @@ function getPlatformExtension(headers) {
 
 // *******************  HANDLING PATHS *******************
 
+app.use('/', express.static('dist'));
+
 app.get('/', function (req, res) {
     res.send('QR Code Manager working at all');
 });
@@ -190,14 +188,8 @@ app.get('/manifest.plist', function (req, res) {
 });
 
 app.get('/manifest/:type/:version/manifest.plist', function (req, res) {
-
     console.log('TYPE: ', req.params.type);
     console.log('VERSION: ', req.params.version);
-
-    // console.log('MANIFEST: ', JSON.stringify(fs.readFileSync('manifest.plist', 'utf8')));
-
-    // res.setHeader("Content-Type", 'text/plain');
-    // res.sendFile(__dirname  + '/manifest.plist');
 
     fs.writeFile(__dirname  + '/manifest.plist', generatePlist(req.params.type, req.params.version), function (err) {
         if (err) {
@@ -209,27 +201,19 @@ app.get('/manifest/:type/:version/manifest.plist', function (req, res) {
             res.sendFile(__dirname  + '/manifest.plist');
         }
     });
-
-    // res.sendFile(plist.parse(generatePlist()));
 });
 
-//
-// Works
-//
 app.get('/fitatu.ipa', function (req, res) {
     var path = __dirname + '/apps/release/v2.0.14/Fitatu.ipa';
-
-    console.log('MMMime: ',     mime.lookup(path));
 
     res.setHeader("Content-Type", mime.lookup(path));
     res.sendFile(path);
 });
 
 app.get('/fitatu/:type/:version/fitatu.ipa', function (req, res) {
-    // var platformExtension = getPlatformExtension(req.headers);
     var appDirPath = getFilePath(req.params.type, req.params.version);
 
-    console.log('IPA mime: ',     mime.lookup(appDirPath));
+    console.log('IPA mime: ', mime.lookup(appDirPath));
 
     res.setHeader("Content-Type", mime.lookup(appDirPath + '/' + 'Fitatu.ipa'));
     res.sendFile(appDirPath + '/' + 'Fitatu.ipa');
@@ -250,7 +234,6 @@ app.get('/app', function (req, res) {
             if (file.indexOf(platformExtension) > -1) {
                 console.log('file: ', file);
                 // browser downloads file named "app.ipa" or "app.apk" due to endpoint name
-
                 res.setHeader("Content-Type", mime.lookup(appDirPath + '/' + file)); //Solution!
                 res.sendFile(appDirPath + '/' + file);
             }
@@ -258,24 +241,17 @@ app.get('/app', function (req, res) {
     });
 });
 
-app.use('/', express.static('dist'));
-
 app.get('/application', function (req, res) {
-    var platformExtension = getPlatformExtension(req.headers);
-    var appDirPath = getFilePath(req.query.type, req.query.version);
-
     res.setHeader('APP-TYPE', req.query.type);
     res.setHeader('APP-VERSION', req.query.version);
     res.sendFile(__dirname  + '/install.html');
 });
-
 
 app.get('/application.ipa', function (req, res) {
 
     // tutorial https://gknops.github.io/adHocGenerate/#magiclink
     // local: http://192.168.0.87:3001/xxx?type=release&version=v2.0.11&t=3
     // remote: http://www.bitart.com/WirelessAdHocDemo/WirelessAdHocDemo.plist
-
 
     var platformExtension = getPlatformExtension(req.headers);
     var appDirPath = getFilePath(req.query.type, req.query.version);
@@ -285,26 +261,10 @@ app.get('/application.ipa', function (req, res) {
     console.log('Applications dir: ', appDirPath);
     console.log('mime: ',     mime.lookup(appDirPath + '/Fitatu.ipa'));
 
-
     fs.readdir(appDirPath, function (err, list) {
         list.forEach(function (file) {
             // @example file = "Fitatu.apk"
             if (file.indexOf(platformExtension) > -1) {
-
-                console.log('file: ', file);
-
-                // browser downloads file named "app.ipa" or "app.apk" due to endpoint name
-
-                // res.setHeader("Content-Type", mime.lookup(appDirPath + '/Fitatu.ipa')); //Solution!
-                // res.setHeader("Content-Disposition", 'attachment'); //Solution!
-                // res.sendFile(appDirPath + '/' + file);
-
-                // res.sendFile(plist.parse(generatePlist()));
-
-
-                // res.setHeader("Content-Type", mime.lookup(appDirPath + '/Fitatu.ipa')); //Solution!
-                // res.setHeader("Content-Type", 'text/xml');
-
                 res.setHeader("Content-Type", 'text/plain');
                 res.sendFile(__dirname  + '/manifest.plist');
             }
