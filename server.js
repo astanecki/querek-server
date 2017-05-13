@@ -2,6 +2,7 @@
  * Simple server for Querek managing given files
  */
 var config      = require('./server.config');
+var express     = require('express');
 var app         = require('express')();
 var mongoClient = require('mongodb').MongoClient;
 var assert      = require('assert');
@@ -15,6 +16,10 @@ var rmdir       = require('rmdir');
 var PORT        = config.CONNECTION.PORT;
 var db;
 var currentSocket;
+
+var mongoose    = require('./mongoose');
+
+//mongoose.initialize();
 
 // ******************* MONGOOSE DB *******************
 function insertToDb(app, callback) {
@@ -173,8 +178,11 @@ function getPlatformExtension(headers) {
 }
 
 // *******************  HANDLING PATHS *******************
+
+app.use(express.static(__dirname + '/public'));
+
 app.get('/', function (req, res) {
-    res.send('QR Code Manager working at all');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/app', function (req, res) {
