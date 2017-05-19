@@ -1,0 +1,126 @@
+.card {
+  width: 290px;
+  margin: 10px;
+  float: left; }
+  .card .content-add {
+    height: 85px !important;
+    width: 40px !important;
+    fill: #20aa2b !important; }
+  .card .card-media {
+    margin-bottom: 16px;
+    height: 130px; }
+    .card .card-media__button-wrapper {
+      height: 130px; }
+    .card .card-media__button {
+      width: 100%;
+      height: 100% !important; }
+  .card .card-code {
+    display: table;
+    margin: 0 auto; }
+  .card-text {
+    padding: 0 16px 10px 16px !important;
+    /*padding: 0 16px !important;*/
+    height: 85px;
+    overflow-y: auto; }
+    .card-text::-webkit-scrollbar {
+      width: 5px;
+      height: 5px; }
+    .card-text::-webkit-scrollbar-track {
+      background: lightblue; }
+    .card-text::-webkit-scrollbar-thumb {
+      background: cadetblue; }
+  .card-overlay {
+    padding: 0 0 6px 16px !important; }
+
+@media (max-width: 320px) {
+  .card {
+    display: table;
+    float: none;
+    width: 100%; }
+    .card-text {
+      display: none; }
+    .card .content-add {
+      margin: 15px auto !important; } }
+
+@media screen and (min-width: 321px) and (max-width: 480px) {
+  .card {
+    float: none;
+    display: table;
+    margin: 15px auto 0 auto;
+    width: 80%; } }
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .card {
+    width: 235px; } }
+
+.topbar-add {
+  font-size: 16px; }
+
+.loader-container {
+  position: relative;
+  margin: 0 auto;
+  width: 70px;
+  /*in media use smaller*/
+  top: 40%; }
+
+.app {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%; }
+
+.hide {
+  display: none; }
+
+.code-platform {
+  width: 50%;
+  text-align: center;
+  float: left;
+  font-size: 14px;
+  line-height: 36px;
+  font-family: Roboto, sans-serif; }
+  .code-platform-disabled {
+    color: #dedede; }
+  .code-platform-enabled {
+    color: #24bd30;
+    font-weight: 500; }
+
+.menu {
+  position: absolute;
+  top: 0;
+  right: -450px;
+  width: 450px;
+  height: 100%;
+  background-color: beige;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; }
+  .menu-opened {
+    -webkit-transform: translate(-450px, 0); }
+
+.inputFile {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0; }
+
+.addVersionButton {
+  position: absolute;
+  margin-top: 650px;
+  margin-left: 1720px; }
+
+.card-buttons {
+  display: inline;
+  position: absolute;
+  right: 0;
+  bottom: 20px; }
+
+.card-tool-button {
+  width: 35px !important;
+  height: 35px; }
+  .card-tool-button svg {
+    width: 16px !important;
+    height: 16px !important; }

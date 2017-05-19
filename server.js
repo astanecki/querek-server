@@ -176,10 +176,10 @@ function getPlatformExtension(headers) {
 
 // *******************  HANDLING PATHS *******************
 
-app.use('/', express.static('dist'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    res.send('QR Code Manager working at all');
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/manifest.plist', function (req, res) {
