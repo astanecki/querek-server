@@ -29478,7 +29478,7 @@
 
 	    NETWORK: {
 	        // SERVER_IP: 'http://192.168.0.153:3001'
-	        SERVER_IP: 'https://querek.fitatu.com:3001'
+	        SERVER_IP: 'https://querek.fitatu.com'
 	    },
 
 	    LOADER: {
