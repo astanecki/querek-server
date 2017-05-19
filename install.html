@@ -62,9 +62,9 @@
                 requestOptions = collectApplicationDetails();
 
                 if (isAndroid()) {
-                    document.location = 'https://fdebd1a2.ngrok.io/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+                    document.location = 'https://querek.fitatu.com/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
                 } else {
-                    document.location = 'itms-services://?action=download-manifest&amp;url=https://fdebd1a2.ngrok.io/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
+                    document.location = 'itms-services://?action=download-manifest&amp;url=https://querek.fitatu.com/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
                 }
             }
 

@@ -29491,7 +29491,7 @@
 /* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
+
 	/**
 	 * Module dependencies.
 	 */
@@ -71430,8 +71430,7 @@
 	            title: this.title,
 	            description: this.description,
 	            version: this.version,
-	            //TODO fill real data
-	            date: '26.11.2015',
+	            date: this.getCurrentDate(),
 	            platforms: this.getSupportedPlatforms(),
 	            zip: this.files.zip,
 	            ipa: this.files.ipa,
@@ -71439,6 +71438,24 @@
 	            type: this.props.type
 	        };
 	    },
+
+        // todo use moment.js
+        getCurrentDate: function () {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            
+            if (dd < 10){
+                dd = '0' + dd;
+            }
+
+            if (mm < 10){
+                mm = '0' + mm;
+            }
+
+            return dd + '.' + mm + '.' + yyyy;
+        },
 
 	    /**
 	     * @function
