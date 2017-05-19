@@ -1,5 +1,5 @@
 {
-  "name": "Querek server",
+  "name": "QuerekServer",
   "version": "1.0.0",
   "description": "Server for Querek application",
   "main": "server.js",
