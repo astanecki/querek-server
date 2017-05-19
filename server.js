@@ -67,7 +67,8 @@ var findAll = function(db, callback) {
     });
 };
 
-mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
+// mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
+mongoClient.connect('mongodb://dev-querek-mongo:2727/baza', function (error, mongoDb) {
     assert.equal(null, error);
 
     db = mongoDb;
