@@ -68,7 +68,7 @@ var findAll = function(db, callback) {
 };
 
 // mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
-mongoClient.connect('mongodb://dev-querek-mongo:2727/baza', function (error, mongoDb) {
+mongoClient.connect('mongodb://dev-querek-mongo:27017/baza', function (error, mongoDb) {
     assert.equal(null, error);
 
     db = mongoDb;
@@ -289,7 +289,7 @@ function generatePlist(type, version) {
                             '<string>software-package</string>' +
                             '<key>url</key>' +
                             // here server crashes while connecting variables
-                            '<string>https://551530d2.ngrok.io/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
+                            '<string>https://querek.fitatu.com/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
                             // '<string>https://551530d2.ngrok.io/fitatu/release/v2.0.14/fitatu.ipa</string>' +
                             // '<string>https://551530d2.ngrok.io/fitatu.ipa</string>' +
                             '</dict>' +
