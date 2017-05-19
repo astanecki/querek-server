@@ -29472,12 +29472,12 @@
 	module.exports = {
 
 	    APP: {
-	        TITLE: "{kuler}",
+	        TITLE: "{Querek} application versioning platform",
 	        LOGO_URL: "https://lh3.googleusercontent.com/aHEx5b92j6eBhJPBRg1b7_rb7icGn7fzAyUPfhBgMG6uOnB16bXgCLjXkMPybI2wYg=w300"
 	    },
 
 	    NETWORK: {
-	        SERVER_IP: 'http://192.168.0.10:3001'
+	        SERVER_IP: 'http://192.168.0.153:3001'
 	    },
 
 	    LOADER: {
