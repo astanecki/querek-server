@@ -38,6 +38,7 @@ function insertToDb(app, callback) {
 function removeFromDb(type, version, callback) {
     var collection = db.collection(type === 'release' ? 'rel' : 'dev');
 
+    console.log('removeFromDb()');
     console.log('DB element to remove: ', collection.find({ version: version }));
 
     collection.removeOne({ version: version }, function(error, result) {
@@ -144,6 +145,8 @@ function onRemoveApp(app) {
     console.log('exist? ', fs.existsSync(appDir));
 
     if(fs.existsSync(appDir)) {
+        console.log('Removing dirr: ', appDir);
+
         rmdir(appDir, function (err, dirs, files) {
             console.log('Removed dirs: ', dirs);
             console.log('Removed files: ', files);
