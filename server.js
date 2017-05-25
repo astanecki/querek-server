@@ -68,7 +68,7 @@ var findAll = function(db, callback) {
 };
 
 // mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
-mongoClient.connect('mongodb://dev-querek-mongo:27017/baza', function (error, mongoDb) {
+mongoClient.connect('mongodb://dev-querek-mongo:27017/baza2', function (error, mongoDb) {
     assert.equal(null, error);
 
     db = mongoDb;
@@ -140,11 +140,13 @@ function onRemoveApp(app) {
     var appDir = 'apps/' + app.type + '/' + app.version;
 
     console.log('onRemoveApp()', app);
+    console.log('appDir: ', appDir);
+    console.log('exist? ', fs.existsSync(appDir));
 
-    if(fs.existsSync(appDir) ) {
+    if(fs.existsSync(appDir)) {
         rmdir(appDir, function (err, dirs, files) {
-            console.log('removed dirs: ', dirs);
-            console.log('removed files: ', files);
+            console.log('Removed dirs: ', dirs);
+            console.log('Removed files: ', files);
             console.log('All files removed');
 
             removeFromDb(app.type, app.version, emitAll);
@@ -162,6 +164,7 @@ function prepareAppForSaving(app) {
         type: app.type
     };
 }
+
 
 function writeFile(version, name, base64, type) {
     fs.writeFile('apps/' + type + '/' + version + '/' + name, base64, 'base64');
