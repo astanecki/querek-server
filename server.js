@@ -39,7 +39,7 @@ function removeFromDb(type, version, callback) {
     var collection = db.collection(type === 'release' ? 'rel' : 'dev');
 
     console.log('removeFromDb()');
-    console.log('DB element to remove: ', collection.find({ version: version }));
+    console.log('Found? ', !!collection.find({ version: version }));
 
     collection.removeOne({ version: version }, function(error, result) {
         // runtime test for checking if there is no error
