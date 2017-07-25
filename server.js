@@ -1,5 +1,5 @@
 /**
- * Simple server for {kuler} managing given files
+ * Simple server for {Querek} managing given files
  */
 var config      = require('./server.config');
 var express     = require('express');
@@ -7,8 +7,6 @@ var app         = require('express')();
 var mongoClient = require('mongodb').MongoClient;
 var assert      = require('assert');
 var http        = require('http').Server(app);
-
-// http https = require('https');
 
 var path        = require('path');
 var io          = require('socket.io')(http);
@@ -244,17 +242,17 @@ app.get('/app', function (req, res) {
 app.get('/application', function (req, res) {
     res.setHeader('APP-TYPE', req.query.type);
     res.setHeader('APP-VERSION', req.query.version);
+
     res.sendFile(__dirname  + '/install.html');
 });
 
 app.get('/application.ipa', function (req, res) {
+    var platformExtension = getPlatformExtension(req.headers);
+    var appDirPath = getFilePath(req.query.type, req.query.version);
 
     // tutorial https://gknops.github.io/adHocGenerate/#magiclink
     // local: http://192.168.0.87:3001/xxx?type=release&version=v2.0.11&t=3
     // remote: http://www.bitart.com/WirelessAdHocDemo/WirelessAdHocDemo.plist
-
-    var platformExtension = getPlatformExtension(req.headers);
-    var appDirPath = getFilePath(req.query.type, req.query.version);
 
     console.log('Query: ', req.query);
     console.log('platformExtension: ', platformExtension);

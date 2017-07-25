@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{kus}</title>
+        <title>{Querek}</title>
         <meta name="viewport" content="width=device-width">
     <body>
         <div>
@@ -58,20 +58,33 @@
             /**
              * @function
              */
-            function detect() {
-                requestOptions = collectApplicationDetails();
-
+            function download() {
                 if (isAndroid()) {
-                    document.location = 'https://fdebd1a2.ngrok.io/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+                    downloadApk();
                 } else {
-                    document.location = 'itms-services://?action=download-manifest&amp;url=https://fdebd1a2.ngrok.io/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
+                    downloadIpa();
                 }
             }
 
+            /**
+             * @function
+             */
+            function downloadApk() {
+                requestOptions = collectApplicationDetails();
 
-            // LETS START
-            detect();
+                document.location = 'https://fdebd1a2.ngrok.io/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+            }
 
+            /**
+             * @function
+             */
+            function downloadIpa() {
+                requestOptions = collectApplicationDetails();
+
+                document.location = 'itms-services://?action=download-manifest&amp;url=https://fdebd1a2.ngrok.io/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
+            }
+
+            download();
 
         </script>
     </body>
