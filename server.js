@@ -6,15 +6,11 @@ var express     = require('express');
 var app         = require('express')();
 var assert      = require('assert');
 var http        = require('http').Server(app);
-
 var path        = require('path');
 var io          = require('socket.io')(http);
-
 var fs          = require('fs');
 var plist       = require('plist');
 var mime        = require('mime');
-
-var PORT        = config.CONNECTION.PORT;
 
 var mongoHandler = require('./src/mongoHandler');
 var socketHandler = require('./src/socketHandler');
@@ -23,8 +19,7 @@ var utils = require('./src/utils');
 socketHandler.startListening(io);
 mongoHandler.connect();
 
-// *******************  HANDLING PATHS *******************
-
+//TODO ******************* move handlers out *******************
 app.use('/', express.static('dist'));
 
 app.get('/', function (req, res) {
@@ -40,7 +35,7 @@ app.get('/manifest/:type/:version/manifest.plist', function (req, res) {
     console.log('TYPE: ', req.params.type);
     console.log('VERSION: ', req.params.version);
 
-    fs.writeFile(__dirname  + '/manifest.plist', generatePlist(req.params.type, req.params.version), function (err) {
+    fs.writeFile(__dirname  + '/manifest.plist', utils.generatePlist(req.params.type, req.params.version), function (err) {
         if (err) {
             console.log('ERROR: ', err);
         } else {
@@ -74,7 +69,7 @@ app.get('/app', function (req, res) {
 
     console.log('Query: ', req.query);
     console.log('platformExtension: ', platformExtension);
-    console.log('Applications dir: ', appDirPath);
+    console.log(appDirPath);
 
     fs.readdir(appDirPath, function (err, list) {
         if (err) {
@@ -127,49 +122,7 @@ app.get('/application.ipa', function (req, res) {
     });
 });
 
-function generatePlist(type, version) {
-    var xml =
-        '<?xml version="1.0" encoding="UTF-8"?>' +
-        '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' +
-        '<plist version="1.0">' +
-            '<dict>' +
-                '<key>items</key>' +
-                '<array>' +
-                    '<dict>' +
-                        '<key>assets</key>' +
-                        '<array>' +
-                            '<dict>' +
-                            '<key>kind</key>' +
-                            '<string>software-package</string>' +
-                            '<key>url</key>' +
-                            // here server crashes while connecting variables
-                            '<string>https://551530d2.ngrok.io/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
-                            // '<string>https://551530d2.ngrok.io/fitatu/release/v2.0.14/fitatu.ipa</string>' +
-                            // '<string>https://551530d2.ngrok.io/fitatu.ipa</string>' +
-                            '</dict>' +
-                        '</array>' +
-                        '<key>metadata</key>' +
-                        '<dict>' +
-                            '<key>bundle-identifier</key>' +
-                            '<string>com.fitatu.tracker</string>' +
-                            '<key>bundle-version</key>' +
-                            '<string>2.0.3</string>' +
-                            '<key>kind</key>' +
-                            '<string>software</string>' +
-                            '<key>title</key>' +
-                            '<string>AppName</string>' +
-                        '</dict>' +
-                    '</dict>' +
-                '</array>' +
-            '</dict>' +
-        '</plist>';
-
-    return xml;
-}
-
-function onSuccessListeningServer() {
-    console.log('QRManager listening on ' + PORT);
-}
-
 // Start listening
-http.listen(PORT, onSuccessListeningServer);
+http.listen(config.CONNECTION.PORT, function () {
+    console.log('Server listening on port: ', config.CONNECTION.PORT);
+});

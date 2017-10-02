@@ -2,6 +2,7 @@ var fs = require('fs');
 var rmdir = require('rmdir');
 var CONFIG = require('../server.config');
 var mongoHandler = require('./mongoHandler');
+var utils = require('./utils');
 var currentSocket;
 
 function setCurrentSocket(socket) {
@@ -26,7 +27,9 @@ function onDisconnect() {
 }
 
 function onReceivedNewApp(app) {
-    prepareAppsDirectory('apps/' + app.type + '/' +  app.version);
+    console.log('onReceivedNewApp', app);
+
+    utils.createDirectoryWithPath('apps/' + app.type + '/' +  app.version);
 
     writeFiles(app);
 
@@ -40,21 +43,9 @@ function onDownloadFile(app) {
     // create stream
 }
 
-function prepareAppsDirectory(dirPath) {
-    var dirPathArray = dirPath.split('/');
-
-    dirPathArray.reduce(function (prev, next) {
-        var fs = require('fs');
-
-        if (!fs.existsSync(prev + '/' + next)) {
-            fs.mkdirSync(prev + '/' + next);
-        }
-
-        return prev + '/' + next;
-    });
-}
-
 function writeFiles(app) {
+    console.log('writeFiles()', app);
+
     CONFIG.EXTENSIONS.forEach(function (extension) {
         if (app.hasOwnProperty(extension)) {
             writeFile(app.version, app[extension].name, app[extension].base64, app.type);

@@ -10,6 +10,9 @@ var mime        = require('mime');
 var db;
 
 module.exports = {
+    /**
+     * @function
+     */
     connect: function () {
         mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
             assert.equal(null, error);
@@ -20,6 +23,11 @@ module.exports = {
         });
     },
 
+    /**
+     * @function
+     * @param app
+     * @param callback
+     */
     insert: function (app, callback) {
         var collection = db.collection(app.type === 'release' ? 'rel' : 'dev');
 
@@ -32,6 +40,12 @@ module.exports = {
         });
     },
 
+    /**
+     * @function
+     * @param type
+     * @param version
+     * @param callback
+     */
     remove: function (type, version, callback) {
         var collection = db.collection(type === 'release' ? 'rel' : 'dev');
 
@@ -46,6 +60,10 @@ module.exports = {
         });
     },
 
+    /**
+     * @function
+     * @param callback
+     */
     collect: function (callback) {
         var relCollection = db.collection('rel');
         var devCollection = db.collection('dev');
