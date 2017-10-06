@@ -1,33 +1,20 @@
 var path = require('path');
 var fs = require('fs');
 
-/**
- *
- */
 module.exports = {
-    /**
-     *
-     * @param type
-     * @param version
-     * @returns {string}
-     */
+
     getFilePath: function (type, version) {
         return path.join(__dirname, '../', '/apps/' + type + '/' + version);
     },
 
-    /**
-     *
-     * @param headers
-     * @returns {string}
-     */
+    getAbsolutePath: function (fileName) {
+        return path.join(__dirname, fileName);
+    },
+
     getPlatformExtension: function (headers) {
         return headers['user-agent'].indexOf('Android') > -1 ? 'apk' : 'ipa';
     },
 
-    /**
-     *
-     * @param dirPath
-     */
     createDirectoryWithPath: function (dirPath) {
         var dirPathArray = dirPath.split('/');
 
@@ -40,12 +27,6 @@ module.exports = {
         });
     },
 
-    /**
-     *
-     * @param type
-     * @param version
-     * @returns {string}
-     */
     generatePlist: function (type, version) {
         var xml =
             '<?xml version="1.0" encoding="UTF-8"?>' +
