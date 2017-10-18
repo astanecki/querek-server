@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const routes = require('express').Router();
 const mime = require('mime');
 const fs = require('fs');

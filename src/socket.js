@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const fs = require('fs');
 const rmdir = require('rmdir');
 const CONFIG = require('../server.config');
