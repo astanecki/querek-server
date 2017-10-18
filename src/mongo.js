@@ -1,20 +1,20 @@
 /**
  * Simple server for {Querek} managing given files
  */
-var mongoClient = require('mongodb').MongoClient;
-var assert      = require('assert');
-var path        = require('path');
-var fs          = require('fs');
-var plist       = require('plist');
-var mime        = require('mime');
+const mongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+const path = require('path');
+const fs = require('fs');
+const plist = require('plist');
+const mime = require('mime');
 var db;
 
 module.exports = {
     /**
      * @function
      */
-    connect: function () {
-        mongoClient.connect('mongodb://localhost:2727/bet', function (error, mongoDb) {
+    connect: () => {
+        mongoClient.connect('mongodb://localhost:2727/bet', (error, mongoDb) => {
             assert.equal(null, error);
 
             db = mongoDb;
@@ -28,10 +28,10 @@ module.exports = {
      * @param app
      * @param callback
      */
-    insert: function (app, callback) {
+    insert: (app, callback) => {
         var collection = db.collection(app.type === 'release' ? 'rel' : 'dev');
 
-        collection.insert(app, function(error, result) {
+        collection.insert(app, (error, result) => {
             // runtime test for checking if there is no error
             assert.equal(error, null);
 
@@ -46,12 +46,12 @@ module.exports = {
      * @param version
      * @param callback
      */
-    remove: function (type, version, callback) {
+    remove: (type, version, callback) => {
         var collection = db.collection(type === 'release' ? 'rel' : 'dev');
 
         console.log('DB element to remove: ', collection.find({ version: version }));
 
-        collection.removeOne({ version: version }, function(error, result) {
+        collection.removeOne({ version: version }, (error, result) => {
             // runtime test for checking if there is no error
             assert.equal(error, null);
 
@@ -64,14 +64,14 @@ module.exports = {
      * @function
      * @param callback
      */
-    collect: function (callback) {
+    collect: (callback) => {
         var relCollection = db.collection('rel');
         var devCollection = db.collection('dev');
 
-        relCollection.find({}).toArray(function(err, releases) {
+        relCollection.find({}).toArray((err, releases) => {
             assert.equal(err, null);
 
-            devCollection.find({}).toArray(function(err, developers) {
+            devCollection.find({}).toArray((err, developers) => {
                 assert.equal(err, null);
 
                 callback({

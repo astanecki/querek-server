@@ -1,24 +1,24 @@
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
+const fs = require('fs');
 
 module.exports = {
 
-    getFilePath: function (type, version) {
+    getFilePath: (type, version) => {
         return path.join(__dirname, '../', '/apps/' + type + '/' + version);
     },
 
-    getAbsolutePath: function (fileName) {
+    getAbsolutePath: fileName => {
         return path.join(__dirname, fileName);
     },
 
-    getPlatformExtension: function (headers) {
+    getPlatformExtension: headers => {
         return headers['user-agent'].indexOf('Android') > -1 ? 'apk' : 'ipa';
     },
 
-    createDirectoryWithPath: function (dirPath) {
+    createDirectoryWithPath: dirPath => {
         var dirPathArray = dirPath.split('/');
 
-        dirPathArray.reduce(function (prev, next) {
+        dirPathArray.reduce((prev, next) => {
             if (!fs.existsSync(prev + '/' + next)) {
                 fs.mkdirSync(prev + '/' + next);
             }
@@ -27,7 +27,7 @@ module.exports = {
         });
     },
 
-    generatePlist: function (type, version) {
+    generatePlist: (type, version) => {
         var xml =
             '<?xml version="1.0" encoding="UTF-8"?>' +
             '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' +

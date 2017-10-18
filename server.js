@@ -3,18 +3,18 @@ const express = require('express');
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-const dotenv = require('dotenv');
 
-const mongo = require('mongoHandler');
-const socket = require('socketHandler');
+const mongo = require('mongo');
+const socket = require('socket');
 const routes = require('routes');
 
-dotenv.config();
-socket.startListening(io);
+
 mongo.connect();
+
+io.on('connection', socket.onConnect);
 
 app.use('/', routes);
 
-http.listen(config.CONNECTION.PORT, function () {
+http.listen(config.CONNECTION.PORT, () => {
     console.log('Server listening on port: ', config.CONNECTION.PORT);
 });

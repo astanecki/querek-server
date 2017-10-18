@@ -1,8 +1,8 @@
-var fs = require('fs');
-var rmdir = require('rmdir');
-var CONFIG = require('../server.config');
-var mongoHandler = require('./mongoHandler');
-var utils = require('./utils');
+const fs = require('fs');
+const rmdir = require('rmdir');
+const CONFIG = require('../server.config');
+const mongoHandler = require('./mongo');
+const utils = require('./utils');
 var currentSocket;
 
 function setCurrentSocket(socket) {
@@ -59,7 +59,7 @@ function onRemoveApp(app) {
     console.log('onRemoveApp()', app);
 
     if(fs.existsSync(appDir) ) {
-        rmdir(appDir, function (err, dirs, files) {
+        rmdir(appDir, (err, dirs, files) => {
             console.log('removed dirs: ', dirs);
             console.log('removed files: ', files);
             console.log('All files removed');
@@ -85,19 +85,12 @@ function writeFile(version, name, base64, type) {
 }
 
 module.exports = {
-    /**
-     * @function
-     * @param io
-     */
-    startListening: function (io) {
-        console.log('startListening');
 
-        io.on('connection', function (socket) {
-            console.log('A user connected.');
+    onConnect: (socket) => {
+        console.log('A user connected.');
 
-            setCurrentSocket(socket);
-            emitAll();
-            bindSocket(socket);
-        });
+        setCurrentSocket(socket);
+        emitAll();
+        bindSocket(socket);
     }
 };

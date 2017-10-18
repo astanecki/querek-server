@@ -4,29 +4,15 @@ const fs = require('fs');
 
 const utils = require('utils');
 
-// TODO remove? Test.
-
-//routes.get('/manifest.plist', function (req, res) {
-//    res.setHeader("Content-Type", 'text/plain');
-//    res.sendFile(__dirname  + '/manifest.plist');
-//});
-
-//routes.get('/fitatu.ipa', function (req, res) {
-//    var path = __dirname + '/apps/release/v2.0.14/Fitatu.ipa';
-//
-//    res.setHeader("Content-Type", mime.lookup(path));
-//    res.sendFile(path);
-//});
-
 routes.get('/', (req, res) => {
     res.status(200).json({ message: 'Connected!' });
 });
 
-routes.get('/manifest/:type/:version/manifest.plist', function (req, res) {
+routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {
     console.log('TYPE: ', req.params.type);
     console.log('VERSION: ', req.params.version);
 
-    fs.writeFile(__dirname  + '/manifest.plist', utils.generatePlist(req.params.type, req.params.version), function (err) {
+    fs.writeFile(__dirname  + '/manifest.plist', utils.generatePlist(req.params.type, req.params.version), (err) => {
         if (err) {
             console.log('ERROR: ', err);
         } else {
@@ -38,7 +24,7 @@ routes.get('/manifest/:type/:version/manifest.plist', function (req, res) {
     });
 });
 
-routes.get('/fitatu/:type/:version/fitatu.ipa', function (req, res) {
+routes.get('/fitatu/:type/:version/fitatu.ipa', (req, res) => {
     var appDirPath = utils.getFilePath(req.params.type, req.params.version);
 
     console.log('IPA mime: ', mime.lookup(appDirPath));
@@ -47,7 +33,7 @@ routes.get('/fitatu/:type/:version/fitatu.ipa', function (req, res) {
     res.sendFile(appDirPath + '/' + 'Fitatu.ipa');
 });
 
-routes.get('/app', function (req, res) {
+routes.get('/app', (req, res) => {
     var platformExtension = utils.getPlatformExtension(req.headers);
     var appDirPath = utils.getFilePath(req.query.type, req.query.version);
 
@@ -55,13 +41,13 @@ routes.get('/app', function (req, res) {
     console.log('platformExtension: ', platformExtension);
     console.log(appDirPath);
 
-    fs.readdir(appDirPath, function (err, list) {
+    fs.readdir(appDirPath, (err, list) => {
         if (err) {
             console.log('List error: ', err);
         } else {
             console.log('List: ', list);
 
-            list.forEach(function (file) {
+            list.forEach(file => {
 
                 // @example file = "Fitatu.apk"
                 if (file.indexOf(platformExtension) > -1) {
@@ -75,13 +61,13 @@ routes.get('/app', function (req, res) {
     });
 });
 
-routes.get('/application', function (req, res) {
+routes.get('/application', (req, res) => {
     res.setHeader('APP-TYPE', req.query.type);
     res.setHeader('APP-VERSION', req.query.version);
     res.sendFile(utils.getAbsolutePath('install.html'));
 });
 
-routes.get('/application.ipa', function (req, res) {
+routes.get('/application.ipa', (req, res) => {
     var platformExtension = utils.getPlatformExtension(req.headers);
     var appDirPath = utils.getFilePath(req.query.type, req.query.version);
 
@@ -94,8 +80,8 @@ routes.get('/application.ipa', function (req, res) {
     console.log('Applications dir: ', appDirPath);
     console.log('mime: ',     mime.lookup(appDirPath + '/Fitatu.ipa'));
 
-    fs.readdir(appDirPath, function (err, list) {
-        list.forEach(function (file) {
+    fs.readdir(appDirPath, (err, list) => {
+        list.forEach(file => {
             // @example file = "Fitatu.apk"
             if (file.indexOf(platformExtension) > -1) {
                 res.setHeader("Content-Type", 'text/plain');
