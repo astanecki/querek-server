@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width">
     <body>
         <div>
-            Detect your device!
+            Detecting your device...
         </div>
         <script>
 
@@ -67,8 +67,9 @@
              */
             function downloadApk() {
                 requestOptions = collectApplicationDetails();
-
-                document.location = 'https://fdebd1a2.ngrok.io/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+                // generate by ngrok from cmd  (when 3001 is server port):
+                // > ngrok http 3001
+                document.location = 'https://NGROK_HTTPS_ADDRESS/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
             }
 
             /**
@@ -77,7 +78,7 @@
             function downloadIpa() {
                 requestOptions = collectApplicationDetails();
 
-                document.location = 'itms-services://?action=download-manifest&amp;url=https://fdebd1a2.ngrok.io/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
+                document.location = 'itms-services://?action=download-manifest&amp;url=https://NGROK_HTTPS_ADDRESS/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
             }
 
             download();

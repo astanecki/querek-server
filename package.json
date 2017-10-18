@@ -1,10 +1,11 @@
 {
-  "name": "Querek server",
+  "name": "QuerekServer",
   "version": "1.0.0",
   "description": "Server for Querek application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cross-env NODE_PATH=./src/ node server.js"
   },
   "keywords": [
     "qr",
@@ -14,6 +15,8 @@
   "author": "Adrian Stanecki",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^5.0.5",
+    "dotenv": "^4.0.0",
     "express": "^4.10.2",
     "mongodb": "^2.1.16",
     "socket.io": "^1.4.5",
