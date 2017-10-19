@@ -1,4 +1,0 @@
-from CMD:
-> 'mongod --dbpath=D:/MongoDB/data_bases --port 2727'
-then run server by 
-> 'node server.js'

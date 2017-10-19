@@ -26,6 +26,7 @@ routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {
     });
 });
 
+//TODO refactor endpoint naming - it is only for iOS
 routes.get('/fitatu/:type/:version/fitatu.ipa', (req, res) => {
     var appDirPath = utils.getFilePath(req.params.type, req.params.version);
 
@@ -35,6 +36,7 @@ routes.get('/fitatu/:type/:version/fitatu.ipa', (req, res) => {
     res.sendFile(appDirPath + '/' + 'Fitatu.ipa');
 });
 
+//TODO refactor endpoint naming - it is only for Android
 routes.get('/app', (req, res) => {
     var platformExtension = utils.getPlatformExtension(req.headers);
     var appDirPath = utils.getFilePath(req.query.type, req.query.version);
@@ -64,18 +66,27 @@ routes.get('/app', (req, res) => {
 });
 
 routes.get('/application', (req, res) => {
-    res.setHeader('APP-TYPE', req.query.type);
-    res.setHeader('APP-VERSION', req.query.version);
-    res.sendFile(utils.getAbsolutePath('install.html'));
-});
-
-routes.get('/application.ipa', (req, res) => {
     var platformExtension = utils.getPlatformExtension(req.headers);
     var appDirPath = utils.getFilePath(req.query.type, req.query.version);
 
-    // tutorial https://gknops.github.io/adHocGenerate/#magiclink
-    // local: http://192.168.0.87:3001/xxx?type=release&version=v2.0.11&t=3
-    // remote: http://www.bitart.com/WirelessAdHocDemo/WirelessAdHocDemo.plist
+    res.setHeader('APP-TYPE', req.query.type);
+    res.setHeader('APP-VERSION', req.query.version);
+
+    fs.readdir(appDirPath, (err, list) => {
+        var isSupported = list.some(file => file.indexOf(platformExtension) > -1);
+
+        if (isSupported) {
+            res.sendFile(utils.getAbsolutePath('supported.html'));
+        } else {
+            res.sendFile(utils.getAbsolutePath('notSupported.html'));
+        }
+    });
+});
+
+// TODO test on iOS if is needed.
+routes.get('/application.ipa', (req, res) => {
+    var platformExtension = utils.getPlatformExtension(req.headers);
+    var appDirPath = utils.getFilePath(req.query.type, req.query.version);
 
     console.log('Query: ', req.query);
     console.log('platformExtension: ', platformExtension);
