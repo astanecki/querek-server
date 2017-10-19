@@ -1,0 +1,7 @@
+from CMD:
+> 'mongod --dbpath=D:/MongoDB/data_bases --port 2727'
+then run server by 
+> 'npm run server'
+
+tutorial: https://gknops.github.io/adHocGenerate/#magiclink
+remote manifest: http://www.bitart.com/WirelessAdHocDemo/WirelessAdHocDemo.plist
