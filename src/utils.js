@@ -45,7 +45,7 @@ module.exports = {
             '<string>software-package</string>' +
             '<key>url</key>' +
                 // here server crashes while connecting variables
-            '<string>https://551530d2.ngrok.io/fitatu/' + type + '/' + version + '/fitatu.ipa</string>' +
+            '<string>https://NGROK_HTTPS_ADDRESS/install/' + type + '/' + version + '/install.ipa</string>' +
                 // '<string>https://551530d2.ngrok.io/fitatu/release/v2.0.14/fitatu.ipa</string>' +
                 // '<string>https://551530d2.ngrok.io/fitatu.ipa</string>' +
             '</dict>' +
