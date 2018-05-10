@@ -4,7 +4,7 @@ const routes = require('express').Router();
 const mime = require('mime');
 const fs = require('fs');
 
-const utils = require('utils');
+const utils = require('../utils');
 
 routes.get('/', (req, res) => {
     res.status(200).json({ message: 'Connected!' });
