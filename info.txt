@@ -3,5 +3,8 @@ from CMD:
 then run server by 
 > 'npm run server'
 
+create any file with defined size:
+> truncate -s 66m example.ipa
+
 tutorial: https://gknops.github.io/adHocGenerate/#magiclink
 remote manifest: http://www.bitart.com/WirelessAdHocDemo/WirelessAdHocDemo.plist

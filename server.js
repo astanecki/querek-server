@@ -4,10 +4,9 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-const mongo = require('mongo');
-const socket = require('socket');
-const routes = require('routes');
-
+const mongo = require('./src/mongo');
+const socket = require('./src/socket');
+const routes = require('./src/routes');
 
 mongo.connect();
 
