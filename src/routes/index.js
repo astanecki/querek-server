@@ -3,11 +3,16 @@
 const routes = require('express').Router();
 const mime = require('mime');
 const fs = require('fs');
+const mongo = require('../mongo');
 
 const utils = require('../utils');
 
 routes.get('/', (req, res) => {
     res.status(200).json({ message: 'Connected!' });
+});
+
+routes.get('/applications', (req, res) => {
+    mongo.collect(availableVersions => res.send(availableVersions));
 });
 
 routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {
