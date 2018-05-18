@@ -3,8 +3,9 @@
 const routes = require('express').Router();
 const mime = require('mime');
 const fs = require('fs');
-const mongo = require('../mongo');
 
+const mongo = require('../mongo');
+const socket = require('../socket');
 const utils = require('../utils');
 
 routes.get('/', (req, res) => {
@@ -13,6 +14,13 @@ routes.get('/', (req, res) => {
 
 routes.get('/applications', (req, res) => {
     mongo.collect(availableVersions => res.send(availableVersions));
+});
+
+routes.post('/applications/:version', (req, res) => {
+    console.log('POST::/applications/:', req.params.version);
+
+    // todo remove socket
+    socket.onReceivedNewApp(req.body);
 });
 
 routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {

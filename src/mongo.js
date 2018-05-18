@@ -14,7 +14,7 @@ module.exports = {
      * @function
      */
     connect: () => {
-        mongoClient.connect('mongodb://localhost:2727/bet', (error, mongoDb) => {
+        mongoClient.connect('mongodb://localhost:2727/bet22', (error, mongoDb) => {
             assert.equal(null, error);
 
             db = mongoDb;

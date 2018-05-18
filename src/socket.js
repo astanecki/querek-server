@@ -29,7 +29,7 @@ function onDisconnect() {
 }
 
 function onReceivedNewApp(app) {
-    console.log('onReceivedNewApp', app);
+    console.log('onReceivedNewApp', app.title);
 
     utils.createDirectoryWithPath('apps/' + app.type + '/' +  app.version);
 
@@ -46,7 +46,7 @@ function onDownloadFile(app) {
 }
 
 function writeFiles(app) {
-    console.log('writeFiles()', app);
+    console.log('writeFiles()', app.title);
 
     CONFIG.EXTENSIONS.forEach(function (extension) {
         if (app.hasOwnProperty(extension)) {
@@ -94,5 +94,7 @@ module.exports = {
         setCurrentSocket(socket);
         emitAll();
         bindSocket(socket);
-    }
+    },
+
+    onReceivedNewApp: onReceivedNewApp
 };
