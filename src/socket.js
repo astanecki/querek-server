@@ -15,7 +15,6 @@ function bindSocket(socket) {
     socket.on('disconnect', onDisconnect);
     socket.on('new-app', onReceivedNewApp);
     socket.on('remove-app', onRemoveApp);
-    socket.on('download-app', onDownloadFile);
 }
 
 function emitAll() {
@@ -41,10 +40,6 @@ function onReceivedNewApp(app) {
     );
 }
 
-function onDownloadFile(app) {
-    // create stream
-}
-
 function writeFiles(app) {
     console.log('writeFiles()', app.title);
 
@@ -58,7 +53,7 @@ function writeFiles(app) {
 function onRemoveApp(app) {
     var appDir = 'apps/' + app.type + '/' + app.version;
 
-    console.log('onRemoveApp()', app);
+    console.log('onRemoveApp()', appDir);
 
     if(fs.existsSync(appDir) ) {
         rmdir(appDir, (err, dirs, files) => {
@@ -96,5 +91,6 @@ module.exports = {
         bindSocket(socket);
     },
 
-    onReceivedNewApp: onReceivedNewApp
+    onReceivedNewApp: onReceivedNewApp,
+    onRemoveApp: onRemoveApp
 };

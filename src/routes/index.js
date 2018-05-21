@@ -16,11 +16,18 @@ routes.get('/applications', (req, res) => {
     mongo.collect(availableVersions => res.send(availableVersions));
 });
 
-routes.post('/applications/:version', (req, res) => {
+routes.post('/applications/:type/:version', (req, res) => {
     console.log('POST::/applications/:', req.params.version);
 
     // todo remove socket
     socket.onReceivedNewApp(req.body);
+});
+
+routes.delete('/applications/:type/:version', (req, res) => {
+    console.log('DELETE::/applications/:', req.params.type, req.params.version);
+
+    // todo remove socket
+    socket.onRemoveApp(req.params);
 });
 
 routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {
