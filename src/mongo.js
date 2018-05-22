@@ -1,12 +1,12 @@
 /**
  * Simple server for {Querek} managing given files
  */
-const mongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs');
-const plist = require('plist');
-const mime = require('mime');
+const mongoClient   = require('mongodb').MongoClient;
+const assert        = require('assert');
+const path          = require('path');
+const fs            = require('fs');
+const plist         = require('plist');
+const mime          = require('mime');
 var db;
 
 module.exports = {

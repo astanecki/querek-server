@@ -1,31 +1,11 @@
 /*jshint esversion: 6 */
 
-const fs = require('fs');
-const rmdir = require('rmdir');
-const CONFIG = require('../server.config');
-const mongoHandler = require('./mongo');
-const utils = require('./utils');
-var currentSocket;
+const fs            = require('fs');
+const rmdir         = require('rmdir');
 
-function setCurrentSocket(socket) {
-    currentSocket = socket;
-}
-
-function bindSocket(socket) {
-    socket.on('disconnect', onDisconnect);
-    socket.on('new-app', onReceivedNewApp);
-    socket.on('remove-app', onRemoveApp);
-}
-
-function emitAll() {
-    mongoHandler.collect(function (availableVersions) {
-        currentSocket.emit('availableVersions', availableVersions);
-    }.bind(this));
-}
-
-function onDisconnect() {
-    console.log('user disconnected');
-}
+const CONFIG        = require('../server.config');
+const mongoHandler  = require('./mongo');
+const utils         = require('./utils');
 
 function onReceivedNewApp(app) {
     console.log('onReceivedNewApp', app.title);
@@ -36,7 +16,9 @@ function onReceivedNewApp(app) {
 
     mongoHandler.insert(
         prepareAppForSaving(app),
-        emitAll
+        function (codes) {
+            console.log('Available: ', codes);
+        }
     );
 }
 
@@ -82,15 +64,6 @@ function writeFile(version, name, base64, type) {
 }
 
 module.exports = {
-
-    onConnect: (socket) => {
-        console.log('A user connected.');
-
-        setCurrentSocket(socket);
-        emitAll();
-        bindSocket(socket);
-    },
-
     onReceivedNewApp: onReceivedNewApp,
     onRemoveApp: onRemoveApp
 };

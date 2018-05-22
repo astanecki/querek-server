@@ -1,6 +1,10 @@
-from CMD:
-> 'mongod --dbpath=D:/MongoDB/data_bases --port 2727'
-then run server by 
+Go to:
+C:\Program Files\MongoDB\Server\3.2\bin
+
+and type from CMD:
+> mongod --dbpath=C:\Users\Adrian\PhpstormProjects\Querek\querek-server\db --port 2727
+
+then run server by
 > 'npm run server'
 
 create any file with defined size:
