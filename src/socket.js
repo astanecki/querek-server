@@ -43,7 +43,7 @@ function onRemoveApp(app) {
             console.log('removed files: ', files);
             console.log('All files removed');
 
-            mongoHandler.remove(app.type, app.version, emitAll);
+            mongoHandler.remove(app.type, app.version);
         });
     }
 }

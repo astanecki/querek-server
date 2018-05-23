@@ -11,13 +11,6 @@
         <script>
 
             /**
-             * Stores details like version and type of requested application
-             *
-             * @type {Object}
-             */
-            var requestOptions;
-
-            /**
              * @function
              * @returns {Array.<String>}
              */
@@ -33,14 +26,12 @@
              * @returns {Object}
              */
             function collectApplicationDetails() {
-                var queries = collectSearchArguments();
-                var options = {};
+                var params = document.location.href.split('/');
 
-                queries.forEach(function (query) {
-                    options[query.split('=')[0]] = query.split('=')[1];
-                });
-
-                return options;
+                return {
+                    type: params[params.length - 2],
+                    version: params[params.length - 1]
+                };
             }
 
             /**
@@ -55,29 +46,28 @@
              * @function
              */
             function download() {
+                var details = collectApplicationDetails();
+
                 if (isAndroid()) {
-                    downloadApk();
+                    downloadApk(details);
                 } else {
-                    downloadIpa();
+                    downloadIpa(details);
                 }
             }
 
             /**
              * @function
              */
-            function downloadApk() {
-                requestOptions = collectApplicationDetails();
+            function downloadApk(requestOptions) {
                 // generate by ngrok from cmd  (when 3001 is server port):
                 // > ngrok http 3001
-                document.location = 'https://NGROK_HTTPS_ADDRESS/app?type=' + requestOptions.type + '&version=' + requestOptions.version;
+                document.location = 'https://NGROK_HTTPS_ADDRESS/install/' + requestOptions.type + '/' + requestOptions.version;
             }
 
             /**
              * @function
              */
-            function downloadIpa() {
-                requestOptions = collectApplicationDetails();
-
+            function downloadIpa(requestOptions) {
                 document.location = 'itms-services://?action=download-manifest&amp;url=https://NGROK_HTTPS_ADDRESS/manifest/' + requestOptions.type + '/' + requestOptions.version + '/manifest.plist';
             }
 

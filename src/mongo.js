@@ -14,7 +14,7 @@ module.exports = {
      * @function
      */
     connect: () => {
-        mongoClient.connect('mongodb://localhost:2727/bet22', (error, mongoDb) => {
+        mongoClient.connect('mongodb://localhost:2727/rest_v1', (error, mongoDb) => {
             assert.equal(null, error);
 
             db = mongoDb;
@@ -55,8 +55,9 @@ module.exports = {
             // runtime test for checking if there is no error
             assert.equal(error, null);
 
-            //console.log('Versions were inserted into database');
-            callback(result);
+            if (callback) {
+                callback(result);
+            }
         });
     },
 
