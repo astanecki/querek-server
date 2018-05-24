@@ -5,8 +5,10 @@ const mime = require('mime');
 const fs = require('fs');
 
 const mongo = require('../mongo');
-const socket = require('../socket');
 const utils = require('../utils');
+
+const saveApp = require('../hooks/saveApp');
+const removeApp = require('../hooks/removeApp');
 
 routes.get('/', (req, res) => {
     res.status(200).json({ message: 'Connected!' });
@@ -39,15 +41,17 @@ routes.get('/applications/:type/:version', (req, res) => {
 routes.post('/applications/:type/:version', (req, res) => {
     console.log('POST::/applications/:', req.params);
 
-    // todo remove socket
-    socket.onReceivedNewApp(req.body);
+    saveApp(req.body, function (statusCode) {
+        res.sendStatus(statusCode);
+    });
 });
 
 routes.delete('/applications/:type/:version', (req, res) => {
     console.log('DELETE::/applications/:type/:version', req.params);
 
-    // todo remove socket
-    socket.onRemoveApp(req.params);
+    removeApp(req.params, function (statusCode) {
+        res.sendStatus(statusCode);
+    });
 });
 
 routes.get('/manifest/:type/:version/manifest.plist', (req, res) => {
