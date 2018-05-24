@@ -6,5 +6,6 @@ module.exports = {
     ],
     CONNECTION: {
         PORT: 3001
-    }
+    },
+    LIMIT: '200mb'
 };

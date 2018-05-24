@@ -21,5 +21,8 @@
     "mongodb": "^2.1.16",
     "socket.io": "^1.4.5",
     "socket.io-stream": "^0.9.0"
+  },
+  "devDependencies": {
+    "body-parser": "^1.18.3"
   }
 }

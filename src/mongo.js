@@ -1,12 +1,9 @@
-/**
- * Simple server for {Querek} managing given files
- */
-const mongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
-const path = require('path');
-const fs = require('fs');
-const plist = require('plist');
-const mime = require('mime');
+const mongoClient   = require('mongodb').MongoClient;
+const assert        = require('assert');
+const path          = require('path');
+const fs            = require('fs');
+const plist         = require('plist');
+const mime          = require('mime');
 var db;
 
 module.exports = {
@@ -14,7 +11,7 @@ module.exports = {
      * @function
      */
     connect: () => {
-        mongoClient.connect('mongodb://localhost:2727/bet', (error, mongoDb) => {
+        mongoClient.connect('mongodb://localhost:2727/rest_v3', (error, mongoDb) => {
             assert.equal(null, error);
 
             db = mongoDb;
@@ -36,7 +33,7 @@ module.exports = {
             assert.equal(error, null);
 
             //console.log('Versions were inserted into database');
-            callback(result);
+            callback(200);
         });
     },
 
@@ -55,8 +52,9 @@ module.exports = {
             // runtime test for checking if there is no error
             assert.equal(error, null);
 
-            //console.log('Versions were inserted into database');
-            callback(result);
+            if (callback) {
+                callback(200);
+            }
         });
     },
 
