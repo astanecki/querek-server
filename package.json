@@ -4,8 +4,7 @@
   "description": "Server for Querek application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cross-env NODE_PATH=./src/ node server.js"
+    "server": "node server.js"
   },
   "keywords": [
     "qr",
@@ -19,6 +18,8 @@
     "dotenv": "^4.0.0",
     "express": "^4.10.2",
     "mongodb": "^2.1.16",
+    "plist": "^3.0.1",
+    "rmdir": "^1.2.0",
     "socket.io": "^1.4.5",
     "socket.io-stream": "^0.9.0"
   },
