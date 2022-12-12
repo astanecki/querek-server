@@ -16,7 +16,7 @@
   "dependencies": {
     "cross-env": "^5.0.5",
     "dotenv": "^4.0.0",
-    "express": "^4.10.2",
+    "express": "^4.17.3",
     "mongodb": "^2.1.16",
     "plist": "^3.0.1",
     "rmdir": "^1.2.0",
